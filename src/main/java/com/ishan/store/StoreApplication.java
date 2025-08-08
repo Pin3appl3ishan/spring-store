@@ -1,5 +1,6 @@
 package com.ishan.store;
 
+import com.ishan.store.entities.Address;
 import com.ishan.store.entities.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +18,16 @@ public class StoreApplication {
 				.password("john123")
 				.email("john@gmail.com")
 				.build();
+
+		var address = Address.builder()
+				.street("street")
+				.city("city")
+				.state("state")
+				.zip("zip")
+				.build();
+
+		user.addAddress(address);
+		System.out.println(user);
 	}
 
 
