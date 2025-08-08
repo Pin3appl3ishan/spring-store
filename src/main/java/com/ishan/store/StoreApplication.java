@@ -1,5 +1,6 @@
 package com.ishan.store;
 
+import com.ishan.store.entities.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -8,14 +9,14 @@ import org.springframework.context.ApplicationContext;
 public class StoreApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
-
-//		var resource = context.getBean(HeavyResource.class);
-
-//		var orderService = context.getBean(OrderService.class);
-//		orderService.placeOrder();
-//		var notificationService = context.getBean(NotificationService.class);
-//		notificationService.send("hi, it's ishan");
+//		ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
+//		var user = new User(1L, "ishan", "ishan@email", "ishan123");
+		var user = User.builder()
+				.id(1L)
+				.name("John")
+				.password("john123")
+				.email("john@gmail.com")
+				.build();
 	}
 
 
