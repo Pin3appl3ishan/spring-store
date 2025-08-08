@@ -1,6 +1,7 @@
 package com.ishan.store;
 
 import com.ishan.store.entities.Address;
+import com.ishan.store.entities.Profile;
 import com.ishan.store.entities.Tag;
 import com.ishan.store.entities.User;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +21,13 @@ public class StoreApplication {
 				.email("john@gmail.com")
 				.build();
 
-		user.addTag("tag1");
+		var profile = Profile.builder()
+						.bio("bio")
+						.build();
+
+		user.setProfile(profile);
+		profile.setUser(user);
+
 		System.out.println(user);
 	}
 
