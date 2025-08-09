@@ -2,15 +2,11 @@ package com.ishan.store.services;
 
 
 import com.ishan.store.entities.*;
-import com.ishan.store.repositories.AddressRepository;
-import com.ishan.store.repositories.ProfileRepository;
-import com.ishan.store.repositories.UserRepository;
+import com.ishan.store.repositories.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 @AllArgsConstructor
 @Service
@@ -20,6 +16,7 @@ public class UserService {
     private final EntityManager entityManager;
     private final AddressRepository addressRepository;
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Transactional
     public void showEntityStates() {
@@ -79,16 +76,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void manageProducts() {
-        var category = new Category("Category 1");
-
-        var product = Product.builder()
-                .name("Product 1")
-                .description("desc 1")
-                .price(BigDecimal.valueOf(10.99))
-                .category(category)
-                .build();
-
-        productRepository.save(product);
+        var user = userRepository.findById(2L).orElseThrow();
+        var products = productRepository.findAll();
+        products.forEach(user::addFavoriteProduct);
+        userRepository.save(user);
     }
 }
