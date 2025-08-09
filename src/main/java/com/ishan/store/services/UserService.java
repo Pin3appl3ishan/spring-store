@@ -1,7 +1,7 @@
 package com.ishan.store.services;
 
 
-import com.ishan.store.entities.User;
+import com.ishan.store.entities.*;
 import com.ishan.store.repositories.AddressRepository;
 import com.ishan.store.repositories.ProfileRepository;
 import com.ishan.store.repositories.UserRepository;
@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @AllArgsConstructor
 @Service
 public class UserService {
@@ -17,6 +19,7 @@ public class UserService {
     private final ProfileRepository profileRepository;
     private final EntityManager entityManager;
     private final AddressRepository addressRepository;
+    private final ProductRepository productRepository;
 
     @Transactional
     public void showEntityStates() {
@@ -47,5 +50,45 @@ public class UserService {
 
     public void fetchAddress() {
         var address = addressRepository.findById(2L).orElseThrow();
+    }
+
+    public void persistRelated() {
+        var user = User.builder()
+                .name("John Doe")
+                .email("john.doe@example.com")
+                .password("password")
+                .build();
+
+        var address = Address.builder()
+                .street("street")
+                .city("city")
+                .state("state")
+                .zip("zip")
+                .build();
+
+        user.addAddress(address);
+
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteRelated() {
+        var user = userRepository.findById(2L).orElseThrow();
+        var address = user.getAddresses().get(0);
+        user.removeAddress(address);
+        userRepository.save(user);
+    }
+
+    public void manageProducts() {
+        var category = new Category("Category 1");
+
+        var product = Product.builder()
+                .name("Product 1")
+                .description("desc 1")
+                .price(BigDecimal.valueOf(10.99))
+                .category(category)
+                .build();
+
+        productRepository.save(product);
     }
 }
