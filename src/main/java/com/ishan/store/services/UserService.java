@@ -54,7 +54,7 @@ public class UserService {
     public void persistRelated() {
         var user = User.builder()
                 .name("John Doe")
-                .email("john.doe@example.com")
+                .email("ishan@gmail.com")
                 .password("password")
                 .build();
 
@@ -94,8 +94,11 @@ public class UserService {
     }
 
     @Transactional
-    public void fetchUser() {
-        var user = userRepository.findByEmail("ishan@gmail.com").orElseThrow();
-        System.out.println(user);
+    public void fetchUsers() {
+        var users = userRepository.findAllWithAddresses();
+        users.forEach(u -> {
+            System.out.println(u);
+            u.getAddresses().forEach(System.out::println);
+        });
     }
 }
