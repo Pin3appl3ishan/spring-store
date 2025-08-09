@@ -1,9 +1,6 @@
 package com.ishan.store;
 
-import com.ishan.store.entities.Address;
-import com.ishan.store.entities.Profile;
-import com.ishan.store.entities.Tag;
-import com.ishan.store.entities.User;
+import com.ishan.store.services.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -12,25 +9,9 @@ import org.springframework.context.ApplicationContext;
 public class StoreApplication {
 
 	public static void main(String[] args) {
-//		ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
-//		var user = new User(1L, "ishan", "ishan@email", "ishan123");
-		var user = User.builder()
-				.id(1L)
-				.name("John")
-				.password("john123")
-				.email("john@gmail.com")
-				.build();
+		ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
 
-		var profile = Profile.builder()
-						.bio("bio")
-						.build();
-
-		user.setProfile(profile);
-		profile.setUser(user);
-
-		System.out.println(user);
+		var service =  context.getBean(UserService.class);
+		service.fetchAddress();
 	}
-
-
-
 }
